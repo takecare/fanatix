@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
-        android:id="@+id/list_fragment_friends_ListView"
+        android:id="@+id/fragment_friends_friends_ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

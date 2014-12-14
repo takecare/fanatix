@@ -15,6 +15,7 @@ public class Friend {
     public String facebookId;
     public boolean primary;
     public boolean chat;
+    private boolean selected;
 
     public String getId() {
         return id;
@@ -70,6 +71,14 @@ public class Friend {
 
     public void setChat(boolean chat) {
         this.chat = chat;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public boolean isRecommended() {

@@ -1,11 +1,14 @@
 package org.vazteixeira.rui.fanatix.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.adapter.holder.FriendViewHolder;
@@ -24,8 +27,11 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
     public static final String TAG = "FriendAdapter";
 
+    private Resources mResources;
+
     private LayoutInflater mLayoutInflater;
     private List<Friend> mFriends;
+    //private
 
     // 3 sections: Recommended, Other, All
     private static final int TYPE_COUNT = 3;
@@ -36,6 +42,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
     public FriendAdapter(List<Friend> friends, Context context) {
 
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mResources = context.getResources();
         mFriends = friends;
     }
 
@@ -98,7 +105,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         FriendViewHolder friendViewHolder;
 
@@ -108,8 +115,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
                 convertView = mLayoutInflater.inflate(R.layout.list_row_recommended, parent, false);
                 friendViewHolder = new RecommendedViewHolder();
-                friendViewHolder.setTitleTextView(
-                        (TextView) convertView.findViewById(R.id.list_row_recommended_title_TextView));
+
                 ((RecommendedViewHolder)friendViewHolder).setTeamTextView(
                         (TextView) convertView.findViewById(R.id.list_row_recommended_team_TextView));
             }
@@ -117,9 +123,12 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
                 convertView = mLayoutInflater.inflate(R.layout.list_row_normal, parent, false);
                 friendViewHolder = new FriendViewHolder();
-                friendViewHolder.setTitleTextView(
-                        (TextView) convertView.findViewById(R.id.list_row_normal_title_TextView));
             }
+
+            friendViewHolder.setTitleTextView(
+                    (TextView) convertView.findViewById(R.id.list_row_title_TextView));
+            friendViewHolder.setSelectedCheckBox(
+                    (ToggleButton) convertView.findViewById(R.id.list_row_selected_Checkbox));
 
             convertView.setTag(friendViewHolder);
         }
@@ -129,6 +138,28 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
         }
 
         friendViewHolder.getTitleTextView().setText(getItem(position).getName());
+
+        friendViewHolder.getSelectedCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                getItem(position).setSelected(isChecked);
+            }
+        });
+
+        friendViewHolder.getSelectedCheckBox().setChecked(getItem(position).isSelected());
+
+
+/*
+        friendViewHolder.getSelectedCheckBox().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getItem(position).setSelected(v.isSelected());
+            }
+        });
+*/
+
         if (getItemViewType(position) == FRIEND_TYPE.TEAM.ordinal()) {
 
             ((RecommendedViewHolder)friendViewHolder).getTeamTextView().setText(getItem(position).getTeam());

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.adapter.FriendAdapter;
@@ -27,7 +28,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * Created by rmvt on 14/12/14.
  */
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     public static final String TAG = "FriendsFragment";
     public static final String ITEM_ID_ARGUMENT = "itemid";
@@ -38,7 +39,7 @@ public class FriendsFragment extends Fragment {
     private LoadingPresenter mLoadingPresenter;
 
     private FriendAdapter mFriendAdapter;
-    @InjectView(R.id.list_fragment_friends_ListView)    StickyListHeadersListView mListView;
+    @InjectView(R.id.fragment_friends_friends_ListView)    StickyListHeadersListView mListView;
 
 
     // ***
@@ -108,6 +109,7 @@ public class FriendsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
         ButterKnife.inject(this, view);
+        mListView.setOnItemClickListener(this);
 
         if (mItemId != null && mItemId.length() > 0) { // double check
 
@@ -117,6 +119,20 @@ public class FriendsFragment extends Fragment {
         return view;
     }
 
+
+    // ***
+    //
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        //Friend friend = (Friend) parent.getItemAtPosition(position);
+        //friend.setSelected(!friend.isSelected());
+
+        //view.setSelected(true);
+
+        Log.d(TAG,"asdasd");
+    }
 
     // ***
     //
@@ -179,4 +195,5 @@ public class FriendsFragment extends Fragment {
         mFriendAdapter = new FriendAdapter(friends, getActivity());
         mListView.setAdapter(mFriendAdapter);
     }
+
 }
