@@ -1,19 +1,19 @@
 package org.vazteixeira.rui.fanatix.adapter.holder;
 
+import android.view.View;
 import android.widget.TextView;
 
-/**
- * Created by rmvt on 14/12/14.
- */
+import org.vazteixeira.rui.fanatix.R;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class HeaderViewHolder {
 
-    private TextView titleTextView;
+    @InjectView(R.id.header_view_title_TextView)    public TextView titleTextView;
 
-    public TextView getTitleTextView() {
-        return titleTextView;
-    }
+    public HeaderViewHolder(View view) {
 
-    public void setTitleTextView(TextView titleTextView) {
-        this.titleTextView = titleTextView;
+        ButterKnife.inject(this, view);
     }
 }

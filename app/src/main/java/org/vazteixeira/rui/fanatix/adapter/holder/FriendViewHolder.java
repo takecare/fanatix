@@ -11,9 +11,6 @@ import org.vazteixeira.rui.fanatix.R;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by rmvt on 14/12/14.
- */
 public class FriendViewHolder {
 
     @InjectView(R.id.list_row_title_TextView)           public TextView titleTextView;

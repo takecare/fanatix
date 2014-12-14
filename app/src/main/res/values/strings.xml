@@ -11,5 +11,9 @@
 
     <string name="fragment_result_warning_TextView">You have selected non-primary friends!</string>
 
+    <string name="header_view_title_recommended">RECOMMENDED</string>
+    <string name="header_view_title_other">OTHER</string>
+    <string name="header_view_title_all">ALL</string>
+
     <string name="rmvt">rui@vazteixeira.org</string>
 </resources>

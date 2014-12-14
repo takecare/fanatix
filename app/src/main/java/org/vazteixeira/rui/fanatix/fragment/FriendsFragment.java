@@ -28,9 +28,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-/**
- * Created by rmvt on 14/12/14.
- */
 public class FriendsFragment extends Fragment implements FriendSelectedListener {
 
     public static final String TAG = "FriendsFragment";
@@ -47,8 +44,8 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
     @InjectView(R.id.fragment_friends_create_Button)    Button mCreateButton;
 
 
-    // ***
-    //
+    // ************
+    // NEW INSTANCE
 
     public static FriendsFragment newInstance() {
 

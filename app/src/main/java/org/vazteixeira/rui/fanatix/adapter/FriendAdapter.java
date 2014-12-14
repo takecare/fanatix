@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,9 +22,6 @@ import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
-/**
- * Created by rmvt on 14/12/14.
- */
 public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdapter {
 
     public static final String TAG = "FriendAdapter";
@@ -62,8 +58,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
             convertView = mLayoutInflater.inflate(R.layout.list_row_header, parent, false);
 
-            headerViewHolder = new HeaderViewHolder();
-            headerViewHolder.setTitleTextView((TextView) convertView.findViewById(R.id.header_view_title_TextView));
+            headerViewHolder = new HeaderViewHolder(convertView);
             convertView.setTag(headerViewHolder);
         }
         else {
@@ -73,15 +68,15 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
         if (getItemViewType(position) == FRIEND_TYPE.TEAM.ordinal()) {
 
-            headerViewHolder.getTitleTextView().setText("RECOMMENDED"); // FIXME
+            headerViewHolder.titleTextView.setText(mResources.getString(R.string.header_view_title_recommended));
         }
         else if (getItemViewType(position) == FRIEND_TYPE.OTHER.ordinal()) {
 
-            headerViewHolder.getTitleTextView().setText("OTHER"); // FIXME
+            headerViewHolder.titleTextView.setText(mResources.getString(R.string.header_view_title_other));
         }
         else {
 
-            headerViewHolder.getTitleTextView().setText("ALL"); // FIXME
+            headerViewHolder.titleTextView.setText(mResources.getString(R.string.header_view_title_all));
         }
 
         return convertView;
