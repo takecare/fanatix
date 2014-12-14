@@ -158,6 +158,20 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
         friendViewHolder.selectedToggleButton.setChecked(getItem(position).isSelected());
 
+        if (getItem(position).isPrimary()) {
+
+            friendViewHolder.chatFrameLayout.setVisibility(View.VISIBLE);
+            friendViewHolder.chatFrameLayout.setBackgroundColor(
+                    getItem(position).isChat() ?
+                        mResources.getColor(R.color.chat_capable)
+                        : mResources.getColor(R.color.not_chat_capable));
+        }
+        else {
+
+            friendViewHolder.chatFrameLayout.setVisibility(View.INVISIBLE);
+        }
+
+
         Picasso.with(mContext).load(getItem(position).getImage()).into(friendViewHolder.avatarImageView);
 
         if (getItemViewType(position) == FRIEND_TYPE.TEAM.ordinal()) {
