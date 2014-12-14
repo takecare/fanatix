@@ -8,4 +8,5 @@
     <string name="huddle">Huddle!</string>
     <string name="item_id_hint">Item ID</string>
 
+    <string name="fragment_friends_create_Button">Create!</string>
 </resources>

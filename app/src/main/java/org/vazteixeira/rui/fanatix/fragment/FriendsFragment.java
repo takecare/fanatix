@@ -14,6 +14,7 @@ import org.vazteixeira.rui.fanatix.adapter.FriendAdapter;
 import org.vazteixeira.rui.fanatix.model.Friend;
 import org.vazteixeira.rui.fanatix.network.FanatixNetwork;
 import org.vazteixeira.rui.fanatix.network.pojo.ItemFriendsResponsePojo;
+import org.vazteixeira.rui.fanatix.view.FriendSelectedListener;
 import org.vazteixeira.rui.fanatix.view.LoadingPresenter;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * Created by rmvt on 14/12/14.
  */
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends Fragment implements FriendSelectedListener {
 
     public static final String TAG = "FriendsFragment";
     public static final String ITEM_ID_ARGUMENT = "itemid";
@@ -188,8 +189,17 @@ public class FriendsFragment extends Fragment {
             }
         }
 
-        mFriendAdapter = new FriendAdapter(friends, getActivity());
+        mFriendAdapter = new FriendAdapter(friends, this, getActivity());
         mListView.setAdapter(mFriendAdapter);
     }
 
+
+    // ***
+    //
+
+    @Override
+    public void friendSelected(boolean isSelected, int position) {
+
+        mCreateButton.setEnabled(mFriendAdapter.hasSelectedFriends());
+    }
 }

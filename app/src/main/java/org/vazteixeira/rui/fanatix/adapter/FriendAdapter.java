@@ -16,7 +16,9 @@ import org.vazteixeira.rui.fanatix.adapter.holder.FriendViewHolder;
 import org.vazteixeira.rui.fanatix.adapter.holder.HeaderViewHolder;
 import org.vazteixeira.rui.fanatix.adapter.holder.RecommendedViewHolder;
 import org.vazteixeira.rui.fanatix.model.Friend;
+import org.vazteixeira.rui.fanatix.view.FriendSelectedListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -33,18 +35,20 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
     private LayoutInflater mLayoutInflater;
     private List<Friend> mFriends;
-    //private
 
-    // 3 sections: Recommended, Other, All
-    private static final int TYPE_COUNT = 3;
+    private FriendSelectedListener mFriendSelectedListener;
+    private int selectedFriendsCount;
+
     public static enum FRIEND_TYPE {
         TEAM, OTHER, ALL
     }
 
-    public FriendAdapter(List<Friend> friends, Context context) {
+    public FriendAdapter(List<Friend> friends, FriendSelectedListener friendSelectedListener, Context context) {
 
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mFriendSelectedListener = friendSelectedListener;
         mResources = context.getResources();
+        selectedFriendsCount = 0;
         mContext = context;
         mFriends = friends;
     }
@@ -138,6 +142,17 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 getItem(position).setSelected(isChecked);
+
+                if (isChecked) {
+
+                    selectedFriendsCount += 1;
+                }
+                else {
+
+                    selectedFriendsCount -= 1;
+                }
+
+                mFriendSelectedListener.friendSelected(isChecked, position);
             }
         });
 
@@ -174,5 +189,31 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
             return FRIEND_TYPE.ALL.ordinal();
         }
+    }
+
+    @Override
+    public boolean hasStableIds() {
+
+        return true;
+    }
+
+    public List<Friend> getSelectedFriends() {
+
+        ArrayList<Friend> selectedFriends = new ArrayList<>();
+        for (Friend friend : mFriends) {
+
+            if (friend.isSelected()) {
+
+                selectedFriends.add(friend);
+            }
+        }
+
+        return selectedFriends;
+    }
+
+    public boolean hasSelectedFriends() {
+
+        // having a counter here removes the need to iterate through the list all the time
+        return selectedFriendsCount > 0;
     }
 }
