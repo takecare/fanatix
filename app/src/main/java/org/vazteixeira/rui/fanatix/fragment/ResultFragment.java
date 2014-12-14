@@ -31,7 +31,11 @@ public class ResultFragment extends Fragment {
 
     private FriendAdapter mFriendAdapter;
     private List<Friend> mSelectedFriends;
-    private boolean mAreThereNonPrimaryFriends;
+    private boolean mAreThereNonPrimaryFriends = false;
+
+
+    // ************
+    // NEW INSTANCE
 
     public static ResultFragment newInstance() {
 
@@ -49,8 +53,9 @@ public class ResultFragment extends Fragment {
         return resultFragment;
     }
 
-    // ***
-    //
+
+    // *********
+    // LIFECYLCE
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,7 +86,7 @@ public class ResultFragment extends Fragment {
 
             mFriendAdapter = new FriendAdapter(mSelectedFriends, null, getActivity());
             mListView.setAdapter(mFriendAdapter);
-            mWarningTextView.setVisibility(View.VISIBLE);
+            mWarningTextView.setVisibility(mAreThereNonPrimaryFriends ? View.VISIBLE : View.GONE);
         }
 
         return view;

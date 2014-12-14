@@ -66,7 +66,8 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
         return friendsFragment;
     }
 
-    // ***
+
+    // *********
     // LIFECYCLE
 
     @Override
@@ -133,8 +134,8 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
     }
 
 
-    // ***
-    //
+    // ***************
+    // CLICK LISTENERS
 
     @OnClick(R.id.fragment_friends_create_Button)
     public void onCreateClicked() {
@@ -142,8 +143,9 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
         mResultsPresenter.showResults(mFriendAdapter.getSelectedFriends());
     }
 
-    // ***
-    //
+
+    // *******
+    // HELPERS
 
     private void requestData() {
 
@@ -208,8 +210,8 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
     }
 
 
-    // ***
-    //
+    // ***********************
+    // FriendSelectedListerner
 
     @Override
     public void friendSelected(boolean isSelected, int position) {

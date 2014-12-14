@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -31,11 +32,12 @@ import butterknife.InjectView;
 public class MainActivity extends ActionBarActivity implements FriendsPresenter, LoadingPresenter, ResultsPresenter {
 
     public static final String TAG = "MainActivity";
+    private static final String LAYOUT_ID_TAG = "loadingRelativeLayout";
 
     @InjectView(R.id.main_activity_loading_RelativeLayout)  RelativeLayout loadingRelativeLayout;
     @InjectView(R.id.main_activity_loading_ProgressBar)     ProgressBar loadingProgressBar;
 
-    // ***
+    // ********
     // LIFECYLE
 
     @Override
@@ -47,58 +49,53 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_activity_container_FrameLayout, MainFragment.newInstance(), MainFragment.class.getSimpleName())
+                .add(
+                        R.id.main_activity_container_FrameLayout,
+                        MainFragment.newInstance(),
+                        MainFragment.class.getSimpleName())
                 .commit();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onSaveInstanceState(Bundle outState) {
 
+        outState.putInt(LAYOUT_ID_TAG, loadingRelativeLayout.getId());
     }
 
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
 
-    // ***
+        if (savedInstanceState != null && savedInstanceState.containsKey(LAYOUT_ID_TAG)) {
+
+            loadingRelativeLayout = (RelativeLayout) findViewById(savedInstanceState.getInt(LAYOUT_ID_TAG));
+        }
+    }
+
+    // ****
     // MENU
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+
+            Toast.makeText(this, R.string.rmvt, Toast.LENGTH_SHORT).show();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    protected void onSaveInstanceState(Bundle outState) {
-
-        outState.putInt("teste",loadingRelativeLayout.getId());
-    }
-
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-        if (savedInstanceState != null && savedInstanceState.containsKey("teste")) {
-
-            loadingRelativeLayout = (RelativeLayout) findViewById(savedInstanceState.getInt("teste"));
-        }
-    }
-
-
-    // ***
-    //
+    // ****************
+    // FriendsPresenter
 
     @Override
     public void showFriends(String itemId) {
@@ -126,8 +123,8 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
                 .commit();
     }
 
-    // ***
-    //
+    // ****************
+    // LoadingPresenter
 
     @Override
     public void showLoading() {
@@ -161,8 +158,8 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
     }
 
 
-    // ***
-    //
+    // ****************
+    // ResultsPresenter
 
     @Override
     public void showResults(List<Friend> selectedFriendsList) {
