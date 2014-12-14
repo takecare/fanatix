@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.vazteixeira.rui.fanatix.R;
+import org.vazteixeira.rui.fanatix.adapter.holder.FriendViewHolder;
 import org.vazteixeira.rui.fanatix.adapter.holder.HeaderViewHolder;
+import org.vazteixeira.rui.fanatix.adapter.holder.RecommendedViewHolder;
 import org.vazteixeira.rui.fanatix.model.Friend;
 
 import java.util.List;
@@ -84,9 +86,9 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
     }
 
     @Override
-    public Object getItem(int position) {
+    public Friend getItem(int position) {
 
-        return null;
+        return mFriends.get(position);
     }
 
     @Override
@@ -98,7 +100,41 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        return null;
+        FriendViewHolder friendViewHolder;
+
+        if (convertView == null) {
+
+            if (getItemViewType(position) == FRIEND_TYPE.TEAM.ordinal()) {
+
+                convertView = mLayoutInflater.inflate(R.layout.list_row_recommended, parent, false);
+                friendViewHolder = new RecommendedViewHolder();
+                friendViewHolder.setTitleTextView(
+                        (TextView) convertView.findViewById(R.id.list_row_recommended_title_TextView));
+                ((RecommendedViewHolder)friendViewHolder).setTeamTextView(
+                        (TextView) convertView.findViewById(R.id.list_row_recommended_team_TextView));
+            }
+            else {
+
+                convertView = mLayoutInflater.inflate(R.layout.list_row_normal, parent, false);
+                friendViewHolder = new FriendViewHolder();
+                friendViewHolder.setTitleTextView(
+                        (TextView) convertView.findViewById(R.id.list_row_normal_title_TextView));
+            }
+
+            convertView.setTag(friendViewHolder);
+        }
+        else {
+
+            friendViewHolder = (FriendViewHolder) convertView.getTag();
+        }
+
+        friendViewHolder.getTitleTextView().setText(getItem(position).getName());
+        if (getItemViewType(position) == FRIEND_TYPE.TEAM.ordinal()) {
+
+            ((RecommendedViewHolder)friendViewHolder).getTeamTextView().setText(getItem(position).getTeam());
+        }
+
+        return convertView;
     }
 
     @Override
