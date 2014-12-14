@@ -1,5 +1,6 @@
 package org.vazteixeira.rui.fanatix.network;
 
+import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
@@ -18,8 +19,7 @@ public interface FanatixRetrofitService {
             @Field("include-all") boolean shouldIncludeAll,
             @Field("itemid") String itemId,
             @Field("auth-fanatix-id") String authId,
-            @Field("auth-fanatix-token") String authToken//,
-
-            //Callback<Map<String,List<Friend>>> callback
+            @Field("auth-fanatix-token") String authToken,
+            Callback<ResponsePojo> callback
     );
 }
