@@ -56,6 +56,8 @@ public class FanatixNetwork {
                                                        String authToken,
                                                        Callback<ItemFriendsResponsePojo> callback) {
 
+        // TODO check if initialised? init()
+
         mFanatixService.listFriendsInterestedInItemFormEncoded(appId, appVersion, appPlatform, shouldIncludeAll, itemId,
                 authId, authToken, callback);
     }
