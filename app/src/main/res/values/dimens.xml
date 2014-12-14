@@ -5,6 +5,7 @@
 
     <dimen name="editTextDefaultTextSize">16sp</dimen>
     <dimen name="editTextDefaultHeight">48dp</dimen>
+    <dimen name="defaultTextSize">16sp</dimen>
     <dimen name="defaultMargin">8dp</dimen>
 
     <!--  -->

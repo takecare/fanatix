@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.adapter.FriendAdapter;
@@ -26,9 +27,11 @@ public class ResultFragment extends Fragment {
     public static final String FRIENDS_LIST_ARGUMENT = "friends";
 
     @InjectView(R.id.fragment_result_friends_ListView)  StickyListHeadersListView mListView;
+    @InjectView(R.id.fragment_result_warning_TextView)  TextView mWarningTextView;
 
     private FriendAdapter mFriendAdapter;
     private List<Friend> mSelectedFriends;
+    private boolean mAreThereNonPrimaryFriends;
 
     public static ResultFragment newInstance() {
 
@@ -56,6 +59,14 @@ public class ResultFragment extends Fragment {
         if (getArguments() != null) {
 
             mSelectedFriends = getArguments().getParcelableArrayList(FRIENDS_LIST_ARGUMENT);
+            for (Friend friend : mSelectedFriends) {
+
+                if (!friend.isPrimary()) {
+
+                    mAreThereNonPrimaryFriends = true;
+                    break;
+                }
+            }
         }
     }
 
@@ -70,6 +81,7 @@ public class ResultFragment extends Fragment {
 
             mFriendAdapter = new FriendAdapter(mSelectedFriends, null, getActivity());
             mListView.setAdapter(mFriendAdapter);
+            mWarningTextView.setVisibility(View.VISIBLE);
         }
 
         return view;

@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/fragment_result_warning_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/defaultTextSize"
+        android:text="@string/fragment_result_warning_TextView"
+        android:visibility="gone" />
+
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/fragment_result_friends_ListView"
         android:layout_width="match_parent"

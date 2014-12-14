@@ -139,25 +139,7 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
     @OnClick(R.id.fragment_friends_create_Button)
     public void onCreateClicked() {
 
-        List<Friend> selectedFriends = mFriendAdapter.getSelectedFriends();
-        mResultsPresenter.showResults(selectedFriends);
-
-/*
-        ArrayList<String> selectedPrimaryFriendsNames = new ArrayList<>();
-        ArrayList<String> selectedNonPrimaryFriendsNames = new ArrayList<>();
-
-        for (Friend friend : selectedFriends) {
-
-            if (friend.isPrimary()) {
-
-                selectedPrimaryFriendsNames.add(friend.getName());
-            }
-            else {
-
-                selectedNonPrimaryFriendsNames.add(friend.getName());
-            }
-        }
-*/
+        mResultsPresenter.showResults(mFriendAdapter.getSelectedFriends());
     }
 
     // ***

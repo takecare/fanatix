@@ -9,4 +9,6 @@
     <string name="item_id_hint">Item ID</string>
 
     <string name="fragment_friends_create_Button">Create!</string>
+
+    <string name="fragment_result_warning_TextView">You have selected non-primary friends!</string>
 </resources>
