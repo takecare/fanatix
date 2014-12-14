@@ -6,10 +6,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.vazteixeira.rui.fanatix.R;
+import org.vazteixeira.rui.fanatix.fragment.FriendsFragment;
 import org.vazteixeira.rui.fanatix.fragment.MainFragment;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements FriendsFragment.FriendsPresenter {
 
     public static final String TAG = "MainActivity";
 
@@ -59,5 +60,27 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    // ***
+    //
+
+    @Override
+    public void showFriends() {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_activity_container_FrameLayout, FriendsFragment.newInstance(), FriendsFragment.class.getSimpleName())
+                .commit();
+    }
+
+    @Override
+    public void hideFriends() {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.main_activity_container_FrameLayout, MainFragment.newInstance(), MainFragment.class.getSimpleName())
+                .commit();
     }
 }

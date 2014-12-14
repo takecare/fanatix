@@ -30,6 +30,8 @@ public class FanatixNetwork {
 
     private FanatixRetrofitService mFanatixService;
 
+    // TODO setAuthId() & setAuthToken()
+
     private String mAuthId;
     private String mAuthToken;
 
