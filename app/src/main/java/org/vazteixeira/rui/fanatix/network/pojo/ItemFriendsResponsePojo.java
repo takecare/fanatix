@@ -12,10 +12,17 @@ import java.util.Map;
  */
 public class ItemFriendsResponsePojo {
 
+    public static final String RESPONSE_OK = "ok";
+
     public String uid;
     public String status;
     public String version;
 
     @SerializedName("response")
     public Map<String,List<Friend>> teams;
+
+    public boolean isResponseOk() {
+
+        return status.equals(RESPONSE_OK);
+    }
 }

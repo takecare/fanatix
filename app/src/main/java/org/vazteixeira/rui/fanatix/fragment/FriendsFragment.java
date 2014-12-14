@@ -103,6 +103,16 @@ public class FriendsFragment extends Fragment {
 
                             Log.d(TAG, "SUCCESS!");
                             mLoadingPresenter.hideLoading();
+
+                            if (responsePojo.isResponseOk()) {
+
+                                loadData(responsePojo);
+                            }
+                            else {
+
+                                // TODO error!
+                            }
+
                         }
 
                         @Override
@@ -110,6 +120,8 @@ public class FriendsFragment extends Fragment {
 
                             Log.d(TAG, "FAILURE: " + error.getMessage());
                             mLoadingPresenter.hideLoading();
+
+                            // TODO error!
                         }
                     }
             );
@@ -128,4 +140,10 @@ public class FriendsFragment extends Fragment {
     }
 
 
+    // ***
+    //
+
+    private void loadData(ItemFriendsResponsePojo responsePojo) {
+        
+    }
 }
