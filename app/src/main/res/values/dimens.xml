@@ -4,10 +4,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="editTextDefaultTextSize">16sp</dimen>
-    <dimen name="editTextDefaultHeight">24dp</dimen>
+    <dimen name="editTextDefaultHeight">48dp</dimen>
     <dimen name="defaultMargin">8dp</dimen>
 
     <!--  -->
-    <dimen name="huddleButtonHeight">30dp</dimen>
+    <dimen name="huddleButtonHeight">60dp</dimen>
     <dimen name="huddleButtonTextSize">20sp</dimen>
 </resources>
