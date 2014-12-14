@@ -88,7 +88,6 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO load data passed via bundle
         if (getArguments() != null) {
 
             mItemId = getArguments().getString(ITEM_ID_ARGUMENT);

@@ -31,6 +31,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
     private LayoutInflater mLayoutInflater;
     private List<Friend> mFriends;
+    private List<Friend> mSelectedFriends;
 
     private FriendSelectedListener mFriendSelectedListener;
     private int selectedFriendsCount;
@@ -43,6 +44,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mFriendSelectedListener = friendSelectedListener;
+        mSelectedFriends = new ArrayList<>();
         mResources = context.getResources();
         selectedFriendsCount = 0;
         mContext = context;
@@ -140,11 +142,11 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
                 if (isChecked) {
 
-                    selectedFriendsCount += 1;
+                    mSelectedFriends.add(getItem(position));
                 }
                 else {
 
-                    selectedFriendsCount -= 1;
+                    mSelectedFriends.remove(getItem(position));
                 }
 
                 if (mFriendSelectedListener != null) {
@@ -226,6 +228,6 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
     public boolean hasSelectedFriends() {
 
         // having a counter here removes the need to iterate through the list all the time
-        return selectedFriendsCount > 0;
+        return mSelectedFriends.size() > 0;
     }
 }
