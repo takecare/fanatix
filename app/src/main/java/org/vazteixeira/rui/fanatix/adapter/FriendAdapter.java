@@ -43,7 +43,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
     @Override
     public long getHeaderId(int position) {
 
-        return 0;
+        return getItemViewType(position);
     }
 
     @Override
@@ -74,5 +74,22 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
     public int getViewTypeCount() {
 
         return FRIEND_TYPE.values().length;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        if (mFriends.get(position).isRecommended()) {
+
+            return FRIEND_TYPE.TEAM.ordinal();
+        }
+        else if (mFriends.get(position).isOther()) {
+
+            return FRIEND_TYPE.OTHER.ordinal();
+        }
+        else {
+
+            return FRIEND_TYPE.ALL.ordinal();
+        }
     }
 }

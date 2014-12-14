@@ -5,6 +5,9 @@ package org.vazteixeira.rui.fanatix.model;
  */
 public class Friend {
 
+    public static final String TEAM_ALL = "all";
+    public static final String TEAM_OTHER = "other";
+
     public String id;
     public String name;
     public String image;
@@ -67,6 +70,21 @@ public class Friend {
 
     public void setChat(boolean chat) {
         this.chat = chat;
+    }
+
+    public boolean isRecommended() {
+
+        return team != null && team.length() > 0 && !team.equals(TEAM_ALL) && !team.equals(TEAM_OTHER);
+    }
+
+    public boolean isOther() {
+
+        return team != null && team.equals(TEAM_OTHER);
+    }
+
+    public boolean isAll() {
+
+        return team != null && team.equals(TEAM_ALL);
     }
 
     @Override
