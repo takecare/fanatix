@@ -5,10 +5,16 @@
 
     <dimen name="editTextDefaultTextSize">16sp</dimen>
     <dimen name="editTextDefaultHeight">48dp</dimen>
+    <dimen name="headerTextSize">24sp</dimen>
     <dimen name="defaultTextSize">16sp</dimen>
     <dimen name="defaultMargin">8dp</dimen>
 
-    <!--  -->
+    <!-- huddle button -->
     <dimen name="huddleButtonHeight">60dp</dimen>
     <dimen name="huddleButtonTextSize">20sp</dimen>
+
+    <!-- -->
+    <dimen name="lightSize">15dp</dimen>
+    <dimen name="avatarSize">50dp</dimen>
+
 </resources>
