@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- LIST VIEW -->
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+        android:id="@+id/list_fragment_friends_ListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
