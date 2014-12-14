@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.vazteixeira.rui.fanatix.R;
+import org.vazteixeira.rui.fanatix.network.FanatixNetwork;
 
 /**
  * Created by rmvt on 14/12/14.
@@ -18,12 +19,24 @@ public class FriendsFragment extends Fragment {
     public static final String ITEM_ID_ARGUMENT = "itemid";
 
     private String mItemId;
+    private FanatixNetwork mFanatixNetwork;
     private FriendsPresenter mFriendsPresenter;
 
 
     public static FriendsFragment newInstance() {
 
         return new FriendsFragment();
+    }
+
+    public static FriendsFragment newInstance(String itemId) {
+
+        Bundle arguments = new Bundle();
+        arguments.putString(ITEM_ID_ARGUMENT, itemId);
+
+        FriendsFragment friendsFragment = new FriendsFragment();
+        friendsFragment.setArguments(arguments);
+
+        return friendsFragment;
     }
 
     // ***
@@ -54,7 +67,16 @@ public class FriendsFragment extends Fragment {
             mItemId = getArguments().getString(ITEM_ID_ARGUMENT);
         }
 
-        
+        if (mItemId == null || mItemId.length() < 1) {
+
+            // TODO error!
+        }
+        else {
+
+            mFanatixNetwork = new FanatixNetwork(); // FIXME consider singleton
+            // TODO issue request
+
+        }
     }
 
     @Override
