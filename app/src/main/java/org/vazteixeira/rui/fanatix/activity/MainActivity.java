@@ -8,9 +8,10 @@ import android.view.MenuItem;
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.fragment.FriendsFragment;
 import org.vazteixeira.rui.fanatix.fragment.MainFragment;
+import org.vazteixeira.rui.fanatix.view.FriendsPresenter;
 
 
-public class MainActivity extends ActionBarActivity implements FriendsFragment.FriendsPresenter {
+public class MainActivity extends ActionBarActivity implements FriendsPresenter {
 
     public static final String TAG = "MainActivity";
 
@@ -67,11 +68,14 @@ public class MainActivity extends ActionBarActivity implements FriendsFragment.F
     //
 
     @Override
-    public void showFriends() {
+    public void showFriends(String itemId) {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_activity_container_FrameLayout, FriendsFragment.newInstance(), FriendsFragment.class.getSimpleName())
+                .replace(
+                        R.id.main_activity_container_FrameLayout,
+                        FriendsFragment.newInstance(itemId),
+                        FriendsFragment.class.getSimpleName())
                 .commit();
     }
 
@@ -80,7 +84,10 @@ public class MainActivity extends ActionBarActivity implements FriendsFragment.F
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_activity_container_FrameLayout, MainFragment.newInstance(), MainFragment.class.getSimpleName())
+                .add(
+                        R.id.main_activity_container_FrameLayout,
+                        MainFragment.newInstance(),
+                        MainFragment.class.getSimpleName())
                 .commit();
     }
 }

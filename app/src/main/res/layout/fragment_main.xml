@@ -7,6 +7,7 @@
     android:gravity="center" >
 
     <EditText
+        android:id="@+id/fragment_main_itemid_EditText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editTextDefaultHeight"
         android:layout_margin="@dimen/defaultMargin"
