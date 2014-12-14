@@ -6,7 +6,11 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <!-- image view -->
+    <ImageView
+        android:id="@+id/list_row_avatar_ImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_popup_sync" />
 
     <ToggleButton
         android:id="@+id/list_row_selected_Checkbox"

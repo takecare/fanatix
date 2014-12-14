@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.squareup.picasso.Picasso;
 
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.adapter.holder.FriendViewHolder;
@@ -27,6 +30,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
     public static final String TAG = "FriendAdapter";
 
+    private Context mContext;
     private Resources mResources;
 
     private LayoutInflater mLayoutInflater;
@@ -43,6 +47,7 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mResources = context.getResources();
+        mContext = context;
         mFriends = friends;
     }
 
@@ -125,8 +130,11 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
                 friendViewHolder = new FriendViewHolder();
             }
 
+            // TODO BUTTER KNIFE!!!
             friendViewHolder.setTitleTextView(
                     (TextView) convertView.findViewById(R.id.list_row_title_TextView));
+            friendViewHolder.setAvatarImageView(
+                    (ImageView) convertView.findViewById(R.id.list_row_avatar_ImageView));
             friendViewHolder.setSelectedCheckBox(
                     (ToggleButton) convertView.findViewById(R.id.list_row_selected_Checkbox));
 
@@ -142,23 +150,13 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
         friendViewHolder.getSelectedCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 getItem(position).setSelected(isChecked);
             }
         });
 
         friendViewHolder.getSelectedCheckBox().setChecked(getItem(position).isSelected());
 
-
-/*
-        friendViewHolder.getSelectedCheckBox().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                getItem(position).setSelected(v.isSelected());
-            }
-        });
-*/
+        Picasso.with(mContext).load(getItem(position).getImage()).into(friendViewHolder.getAvatarImageView());
 
         if (getItemViewType(position) == FRIEND_TYPE.TEAM.ordinal()) {
 

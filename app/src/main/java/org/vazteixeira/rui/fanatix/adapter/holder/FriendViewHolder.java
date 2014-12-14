@@ -1,5 +1,6 @@
 package org.vazteixeira.rui.fanatix.adapter.holder;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -9,6 +10,7 @@ import android.widget.ToggleButton;
 public class FriendViewHolder {
 
     protected TextView titleTextView;
+    protected ImageView avatarImageView;
     protected ToggleButton selectedCheckBox;
 
     public TextView getTitleTextView() {
@@ -17,6 +19,14 @@ public class FriendViewHolder {
 
     public void setTitleTextView(TextView titleTextView) {
         this.titleTextView = titleTextView;
+    }
+
+    public ImageView getAvatarImageView() {
+        return avatarImageView;
+    }
+
+    public void setAvatarImageView(ImageView avatarImageView) {
+        this.avatarImageView = avatarImageView;
     }
 
     public ToggleButton getSelectedCheckBox() {
