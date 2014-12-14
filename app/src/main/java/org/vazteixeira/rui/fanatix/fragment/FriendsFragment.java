@@ -1,5 +1,6 @@
 package org.vazteixeira.rui.fanatix.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,6 +24,12 @@ public class FriendsFragment extends Fragment {
 
     // ***
     // LIFECYCLE
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
