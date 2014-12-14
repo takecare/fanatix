@@ -5,4 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="huddle">Huddle!</string>
+    <string name="item_id_hint">Item ID</string>
+
 </resources>

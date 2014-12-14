@@ -3,6 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center" >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/editTextDefaultHeight"
+        android:layout_margin="@dimen/defaultMargin"
+        android:textSize="@dimen/editTextDefaultTextSize"
+        android:hint="@string/item_id_hint" />
+
+    <Button
+        android:id="@+id/fragment_main_huddle_Button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/huddleButtonHeight"
+        android:textSize="@dimen/huddleButtonTextSize"
+        android:text="@string/huddle" />
 
 </LinearLayout>
