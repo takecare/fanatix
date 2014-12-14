@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.network.FanatixNetwork;
 import org.vazteixeira.rui.fanatix.network.pojo.ItemFriendsResponsePojo;
+import org.vazteixeira.rui.fanatix.view.LoadingPresenter;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -26,6 +27,11 @@ public class FriendsFragment extends Fragment {
     private String mItemId;
     private FanatixNetwork mFanatixNetwork;
 
+    private LoadingPresenter mLoadingPresenter;
+
+
+    // ***
+    //
 
     public static FriendsFragment newInstance() {
 
@@ -50,6 +56,15 @@ public class FriendsFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        try {
+
+            mLoadingPresenter = (LoadingPresenter) activity;
+        }
+        catch (ClassCastException exception) {
+
+            throw new ClassCastException(activity.toString() + " must implement "
+                    + LoadingPresenter.class.getSimpleName());
+        }
     }
 
     @Override
@@ -69,6 +84,8 @@ public class FriendsFragment extends Fragment {
         }
         else {
 
+            mLoadingPresenter.showLoading();
+
             mFanatixNetwork = new FanatixNetwork(); // FIXME consider singleton
             mFanatixNetwork.init();
 
@@ -85,13 +102,14 @@ public class FriendsFragment extends Fragment {
                         public void success(ItemFriendsResponsePojo responsePojo, retrofit.client.Response response) {
 
                             Log.d(TAG, "SUCCESS!");
-
+                            mLoadingPresenter.hideLoading();
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
 
                             Log.d(TAG, "FAILURE: " + error.getMessage());
+                            mLoadingPresenter.hideLoading();
                         }
                     }
             );
