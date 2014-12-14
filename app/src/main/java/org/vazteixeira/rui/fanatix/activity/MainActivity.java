@@ -1,11 +1,12 @@
 package org.vazteixeira.rui.fanatix.activity;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.vazteixeira.rui.fanatix.R;
+import org.vazteixeira.rui.fanatix.fragment.MainFragment;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -21,6 +22,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.main_activity_container_FrameLayout, MainFragment.newInstance(), MainFragment.class.getSimpleName())
+                .commit();
     }
 
     @Override
@@ -28,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
         super.onPause();
 
     }
+
 
     // ***
     // MENU
