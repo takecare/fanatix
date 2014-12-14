@@ -25,7 +25,6 @@ public class FriendsFragment extends Fragment {
 
     private String mItemId;
     private FanatixNetwork mFanatixNetwork;
-    private FriendsPresenter mFriendsPresenter;
 
 
     public static FriendsFragment newInstance() {
@@ -51,15 +50,6 @@ public class FriendsFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        try {
-
-            mFriendsPresenter = (FriendsPresenter) activity;
-        }
-        catch (ClassCastException exception) {
-
-            throw new ClassCastException(activity.toString() + " must implement "
-                    + FriendsPresenter.class.getSimpleName());
-        }
     }
 
     @Override
@@ -119,12 +109,4 @@ public class FriendsFragment extends Fragment {
     }
 
 
-    // ***
-    //
-
-    public interface FriendsPresenter {
-
-        public void showFriends();
-        public void hideFriends();
-    }
 }
