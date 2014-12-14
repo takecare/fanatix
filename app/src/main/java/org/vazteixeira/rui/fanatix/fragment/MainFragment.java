@@ -76,6 +76,12 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
+    }
 
     // ***
     //

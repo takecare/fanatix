@@ -152,12 +152,16 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
                     selectedFriendsCount -= 1;
                 }
 
-                mFriendSelectedListener.friendSelected(isChecked, position);
+                if (mFriendSelectedListener != null) {
+
+                    mFriendSelectedListener.friendSelected(isChecked, position);
+                }
             }
         });
 
         friendViewHolder.selectedToggleButton.setChecked(getItem(position).isSelected());
 
+        // not using state list drawable because this is more readable
         if (getItem(position).isPrimary()) {
 
             friendViewHolder.chatFrameLayout.setVisibility(View.VISIBLE);
@@ -170,7 +174,6 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
 
             friendViewHolder.chatFrameLayout.setVisibility(View.INVISIBLE);
         }
-
 
         Picasso.with(mContext).load(getItem(position).getImage()).into(friendViewHolder.avatarImageView);
 

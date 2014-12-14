@@ -1,9 +1,12 @@
 package org.vazteixeira.rui.fanatix.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by rmvt on 14/12/14.
  */
-public class Friend {
+public class Friend implements Parcelable {
 
     public static final String TEAM_ALL = "all";
     public static final String TEAM_OTHER = "other";
@@ -108,4 +111,45 @@ public class Friend {
                 ", chat=" + chat +
                 '}';
     }
+
+    protected Friend(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        image = in.readString();
+        team = in.readString();
+        facebookId = in.readString();
+        primary = in.readByte() != 0x00;
+        chat = in.readByte() != 0x00;
+        selected = in.readByte() != 0x00;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(image);
+        dest.writeString(team);
+        dest.writeString(facebookId);
+        dest.writeByte((byte) (primary ? 0x01 : 0x00));
+        dest.writeByte((byte) (chat ? 0x01 : 0x00));
+        dest.writeByte((byte) (selected ? 0x01 : 0x00));
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Friend> CREATOR = new Parcelable.Creator<Friend>() {
+        @Override
+        public Friend createFromParcel(Parcel in) {
+            return new Friend(in);
+        }
+
+        @Override
+        public Friend[] newArray(int size) {
+            return new Friend[size];
+        }
+    };
 }

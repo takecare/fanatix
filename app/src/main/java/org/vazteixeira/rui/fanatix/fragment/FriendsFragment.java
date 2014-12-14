@@ -16,6 +16,7 @@ import org.vazteixeira.rui.fanatix.network.FanatixNetwork;
 import org.vazteixeira.rui.fanatix.network.pojo.ItemFriendsResponsePojo;
 import org.vazteixeira.rui.fanatix.view.FriendSelectedListener;
 import org.vazteixeira.rui.fanatix.view.LoadingPresenter;
+import org.vazteixeira.rui.fanatix.view.ResultsPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
     private FanatixNetwork mFanatixNetwork;
 
     private LoadingPresenter mLoadingPresenter;
+    private ResultsPresenter mResultsPresenter;
 
     private FriendAdapter mFriendAdapter;
     @InjectView(R.id.fragment_friends_friends_ListView) StickyListHeadersListView mListView;
@@ -74,11 +76,13 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
         try {
 
             mLoadingPresenter = (LoadingPresenter) activity;
+            mResultsPresenter = (ResultsPresenter) activity;
         }
         catch (ClassCastException exception) {
 
             throw new ClassCastException(activity.toString() + " must implement "
-                    + LoadingPresenter.class.getSimpleName());
+                    + LoadingPresenter.class.getSimpleName() + " and "
+                    + ResultsPresenter.class.getSimpleName());
         }
     }
 
@@ -121,6 +125,13 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
+    }
+
 
     // ***
     //
@@ -128,7 +139,25 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
     @OnClick(R.id.fragment_friends_create_Button)
     public void onCreateClicked() {
 
-        // TODO
+        List<Friend> selectedFriends = mFriendAdapter.getSelectedFriends();
+        mResultsPresenter.showResults(selectedFriends);
+
+/*
+        ArrayList<String> selectedPrimaryFriendsNames = new ArrayList<>();
+        ArrayList<String> selectedNonPrimaryFriendsNames = new ArrayList<>();
+
+        for (Friend friend : selectedFriends) {
+
+            if (friend.isPrimary()) {
+
+                selectedPrimaryFriendsNames.add(friend.getName());
+            }
+            else {
+
+                selectedNonPrimaryFriendsNames.add(friend.getName());
+            }
+        }
+*/
     }
 
     // ***
@@ -175,6 +204,9 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
     }
 
     private void loadData(ItemFriendsResponsePojo responsePojo) {
+
+        // "bonus points if you remove already used names from the "all" section, but it's by no means something you
+        // should delay the test for." -- we could easily remove duplicated friends here, but won't waste time on that
 
         // we need to "flatten" the map...
         List<Friend> team;

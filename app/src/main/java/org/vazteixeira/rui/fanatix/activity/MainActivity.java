@@ -14,20 +14,26 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.fragment.FriendsFragment;
 import org.vazteixeira.rui.fanatix.fragment.MainFragment;
+import org.vazteixeira.rui.fanatix.fragment.ResultFragment;
+import org.vazteixeira.rui.fanatix.model.Friend;
 import org.vazteixeira.rui.fanatix.view.FriendsPresenter;
 import org.vazteixeira.rui.fanatix.view.LoadingPresenter;
+import org.vazteixeira.rui.fanatix.view.ResultsPresenter;
 import org.vazteixeira.rui.fanatix.view.StubAnimationListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class MainActivity extends ActionBarActivity implements FriendsPresenter, LoadingPresenter {
+public class MainActivity extends ActionBarActivity implements FriendsPresenter, LoadingPresenter, ResultsPresenter {
 
     public static final String TAG = "MainActivity";
 
     @InjectView(R.id.main_activity_loading_RelativeLayout)  RelativeLayout loadingRelativeLayout;
-    @InjectView(R.id.main_activity_loading_ProgressBar)     ProgressBar loadingProgressBark;
+    @InjectView(R.id.main_activity_loading_ProgressBar)     ProgressBar loadingProgressBar;
 
     // ***
     // LIFECYLE
@@ -77,6 +83,19 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
         return super.onOptionsItemSelected(item);
     }
 
+    protected void onSaveInstanceState(Bundle outState) {
+
+        outState.putInt("teste",loadingRelativeLayout.getId());
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("teste")) {
+
+            loadingRelativeLayout = (RelativeLayout) findViewById(savedInstanceState.getInt("teste"));
+        }
+    }
+
 
     // ***
     //
@@ -86,6 +105,7 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
 
         getSupportFragmentManager()
                 .beginTransaction()
+                .addToBackStack(FriendsFragment.class.getSimpleName())
                 .replace(
                         R.id.main_activity_container_FrameLayout,
                         FriendsFragment.newInstance(itemId),
@@ -98,13 +118,13 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(
+                .addToBackStack(MainFragment.class.getSimpleName())
+                .replace(
                         R.id.main_activity_container_FrameLayout,
                         MainFragment.newInstance(),
                         MainFragment.class.getSimpleName())
                 .commit();
     }
-
 
     // ***
     //
@@ -138,5 +158,35 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
         });
 
         objectAnimator.start();
+    }
+
+
+    // ***
+    //
+
+    @Override
+    public void showResults(List<Friend> selectedFriendsList) {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(FriendsFragment.class.getSimpleName())
+                .replace(
+                        R.id.main_activity_container_FrameLayout,
+                        ResultFragment.newInstance((ArrayList<Friend>) selectedFriendsList),
+                        ResultFragment.class.getSimpleName())
+                .commit();
+    }
+
+    @Override
+    public void hideResults() {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(MainFragment.class.getSimpleName())
+                .replace(
+                        R.id.main_activity_container_FrameLayout,
+                        MainFragment.newInstance(),
+                        MainFragment.class.getSimpleName())
+                .commit();
     }
 }
