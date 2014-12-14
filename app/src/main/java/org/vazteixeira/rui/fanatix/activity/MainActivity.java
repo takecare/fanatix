@@ -4,17 +4,30 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.fragment.FriendsFragment;
 import org.vazteixeira.rui.fanatix.fragment.MainFragment;
 import org.vazteixeira.rui.fanatix.view.FriendsPresenter;
+import org.vazteixeira.rui.fanatix.view.LoadingPresenter;
+import org.vazteixeira.rui.fanatix.view.StubAnimationListener;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
-public class MainActivity extends ActionBarActivity implements FriendsPresenter {
+public class MainActivity extends ActionBarActivity implements FriendsPresenter, LoadingPresenter {
 
     public static final String TAG = "MainActivity";
 
+    @InjectView(R.id.main_activity_loading_RelativeLayout)  RelativeLayout loadingRelativeLayout;
+    @InjectView(R.id.main_activity_loading_ProgressBar)     ProgressBar loadingProgressBark;
 
     // ***
     // LIFECYLE
@@ -24,6 +37,7 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -89,5 +103,47 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter 
                         MainFragment.newInstance(),
                         MainFragment.class.getSimpleName())
                 .commit();
+    }
+
+
+    // ***
+    //
+
+    @Override
+    public void showLoading() {
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(loadingRelativeLayout, "alpha", 0f, 1f)
+                .setDuration(500); // FIXME hardcoded value
+
+        objectAnimator.addListener(new StubAnimationListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                loadingRelativeLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        objectAnimator.start();
+    }
+
+    @Override
+    public void showLoadingForTimeinterval(long timerInvervalMs) {
+
+        // TODO
+    }
+
+    @Override
+    public void hideLoading() {
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(loadingRelativeLayout, "alpha", 1f, 0f)
+                .setDuration(500); // FIXME hardcoded value
+
+        objectAnimator.addListener(new StubAnimationListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                loadingRelativeLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        objectAnimator.start();
     }
 }
