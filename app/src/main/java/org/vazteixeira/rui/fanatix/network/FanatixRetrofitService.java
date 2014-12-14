@@ -1,5 +1,7 @@
 package org.vazteixeira.rui.fanatix.network;
 
+import org.vazteixeira.rui.fanatix.network.pojo.ItemFriendsResponsePojo;
+
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -20,6 +22,6 @@ public interface FanatixRetrofitService {
             @Field("itemid") String itemId,
             @Field("auth-fanatix-id") String authId,
             @Field("auth-fanatix-token") String authToken,
-            Callback<ResponsePojo> callback
+            Callback<ItemFriendsResponsePojo> callback
     );
 }
