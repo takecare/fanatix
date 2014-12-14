@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 
@@ -119,24 +117,13 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
             if (getItemViewType(position) == FRIEND_TYPE.TEAM.ordinal()) {
 
                 convertView = mLayoutInflater.inflate(R.layout.list_row_recommended, parent, false);
-                friendViewHolder = new RecommendedViewHolder();
-
-                ((RecommendedViewHolder)friendViewHolder).setTeamTextView(
-                        (TextView) convertView.findViewById(R.id.list_row_recommended_team_TextView));
+                friendViewHolder = new RecommendedViewHolder(convertView);
             }
             else {
 
                 convertView = mLayoutInflater.inflate(R.layout.list_row_normal, parent, false);
-                friendViewHolder = new FriendViewHolder();
+                friendViewHolder = new FriendViewHolder(convertView);
             }
-
-            // TODO BUTTER KNIFE!!!
-            friendViewHolder.setTitleTextView(
-                    (TextView) convertView.findViewById(R.id.list_row_title_TextView));
-            friendViewHolder.setAvatarImageView(
-                    (ImageView) convertView.findViewById(R.id.list_row_avatar_ImageView));
-            friendViewHolder.setSelectedCheckBox(
-                    (ToggleButton) convertView.findViewById(R.id.list_row_selected_Checkbox));
 
             convertView.setTag(friendViewHolder);
         }
@@ -145,22 +132,22 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
             friendViewHolder = (FriendViewHolder) convertView.getTag();
         }
 
-        friendViewHolder.getTitleTextView().setText(getItem(position).getName());
+        friendViewHolder.titleTextView.setText(getItem(position).getName());
 
-        friendViewHolder.getSelectedCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        friendViewHolder.selectedToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 getItem(position).setSelected(isChecked);
             }
         });
 
-        friendViewHolder.getSelectedCheckBox().setChecked(getItem(position).isSelected());
+        friendViewHolder.selectedToggleButton.setChecked(getItem(position).isSelected());
 
-        Picasso.with(mContext).load(getItem(position).getImage()).into(friendViewHolder.getAvatarImageView());
+        Picasso.with(mContext).load(getItem(position).getImage()).into(friendViewHolder.avatarImageView);
 
         if (getItemViewType(position) == FRIEND_TYPE.TEAM.ordinal()) {
 
-            ((RecommendedViewHolder)friendViewHolder).getTeamTextView().setText(getItem(position).getTeam());
+            ((RecommendedViewHolder)friendViewHolder).teamTextView.setText(getItem(position).getTeam());
         }
 
         return convertView;

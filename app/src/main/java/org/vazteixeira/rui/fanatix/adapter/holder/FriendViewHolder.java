@@ -1,39 +1,26 @@
 package org.vazteixeira.rui.fanatix.adapter.holder;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import org.vazteixeira.rui.fanatix.R;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by rmvt on 14/12/14.
  */
 public class FriendViewHolder {
 
-    protected TextView titleTextView;
-    protected ImageView avatarImageView;
-    protected ToggleButton selectedCheckBox;
+    @InjectView(R.id.list_row_title_TextView)           public TextView titleTextView;
+    @InjectView(R.id.list_row_avatar_ImageView)         public ImageView avatarImageView;
+    @InjectView(R.id.list_row_selected_ToggleButton)    public ToggleButton selectedToggleButton;
 
-    public TextView getTitleTextView() {
-        return titleTextView;
-    }
+    public FriendViewHolder(View view) {
 
-    public void setTitleTextView(TextView titleTextView) {
-        this.titleTextView = titleTextView;
-    }
-
-    public ImageView getAvatarImageView() {
-        return avatarImageView;
-    }
-
-    public void setAvatarImageView(ImageView avatarImageView) {
-        this.avatarImageView = avatarImageView;
-    }
-
-    public ToggleButton getSelectedCheckBox() {
-        return selectedCheckBox;
-    }
-
-    public void setSelectedCheckBox(ToggleButton selectedCheckBox) {
-        this.selectedCheckBox = selectedCheckBox;
+        ButterKnife.inject(this, view);
     }
 }

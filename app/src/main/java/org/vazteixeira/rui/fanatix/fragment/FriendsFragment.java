@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Button;
 
 import org.vazteixeira.rui.fanatix.R;
 import org.vazteixeira.rui.fanatix.adapter.FriendAdapter;
@@ -21,6 +21,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -28,7 +29,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * Created by rmvt on 14/12/14.
  */
-public class FriendsFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class FriendsFragment extends Fragment {
 
     public static final String TAG = "FriendsFragment";
     public static final String ITEM_ID_ARGUMENT = "itemid";
@@ -39,7 +40,8 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
     private LoadingPresenter mLoadingPresenter;
 
     private FriendAdapter mFriendAdapter;
-    @InjectView(R.id.fragment_friends_friends_ListView)    StickyListHeadersListView mListView;
+    @InjectView(R.id.fragment_friends_friends_ListView) StickyListHeadersListView mListView;
+    @InjectView(R.id.fragment_friends_create_Button)    Button mCreateButton;
 
 
     // ***
@@ -109,7 +111,6 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
         ButterKnife.inject(this, view);
-        mListView.setOnItemClickListener(this);
 
         if (mItemId != null && mItemId.length() > 0) { // double check
 
@@ -123,15 +124,10 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
     // ***
     //
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    @OnClick(R.id.fragment_friends_create_Button)
+    public void onCreateClicked() {
 
-        //Friend friend = (Friend) parent.getItemAtPosition(position);
-        //friend.setSelected(!friend.isSelected());
-
-        //view.setSelected(true);
-
-        Log.d(TAG,"asdasd");
+        // TODO
     }
 
     // ***
