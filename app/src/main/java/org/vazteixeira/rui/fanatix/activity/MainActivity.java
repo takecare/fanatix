@@ -112,17 +112,10 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
     @Override
     public void showLoading() {
 
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(loadingRelativeLayout, "alpha", 0f, 1f)
-                .setDuration(500); // FIXME hardcoded value
-
-        objectAnimator.addListener(new StubAnimationListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                loadingRelativeLayout.setVisibility(View.VISIBLE);
-            }
-        });
-
-        objectAnimator.start();
+        loadingRelativeLayout.setVisibility(View.VISIBLE);
+        ObjectAnimator.ofFloat(loadingRelativeLayout, "alpha", 0f, 1f)
+                .setDuration(500)
+                .start(); // FIXME hardcoded value
     }
 
     @Override
@@ -140,7 +133,7 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
         objectAnimator.addListener(new StubAnimationListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                loadingRelativeLayout.setVisibility(View.VISIBLE);
+                loadingRelativeLayout.setVisibility(View.GONE);
             }
         });
 
