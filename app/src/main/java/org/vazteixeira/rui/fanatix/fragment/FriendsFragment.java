@@ -62,9 +62,10 @@ public class FriendsFragment extends Fragment {
             mItemId = getArguments().getString(ITEM_ID_ARGUMENT);
         }
 
-        if (mItemId == null || mItemId.length() < 1) {
+        if (mItemId == null || mItemId.length() == 0) {
 
             // TODO error!
+            Log.e(TAG, "No item id was supplied...");
         }
         else {
 
@@ -72,11 +73,11 @@ public class FriendsFragment extends Fragment {
             mFanatixNetwork.init();
 
             mFanatixNetwork.listFriendsInterestedInItemFormEncoded(
-                    "cos-iphone",
+                    "cos-iphone", // FIXME hardcoded values!
                     "1.2.3AT",
                     "ios",
                     true,
-                    "49797863",
+                    mItemId,
                     "50f82e1d4a8b519d6d000069",
                     "5fd203caf74e219f585067338b5afae3",
                     new Callback<ItemFriendsResponsePojo>() {

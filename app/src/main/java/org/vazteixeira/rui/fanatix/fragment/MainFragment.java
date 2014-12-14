@@ -2,6 +2,7 @@ package org.vazteixeira.rui.fanatix.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,17 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.inject(this, view);
         // ...
+
+        // we're on the ui thread...
+        final String itemId = "49797863";
+        final EditText finalItemIdEditText = itemIdEditText;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finalItemIdEditText.setText(itemId);
+            }
+        },500);
 
         return view;
     }
