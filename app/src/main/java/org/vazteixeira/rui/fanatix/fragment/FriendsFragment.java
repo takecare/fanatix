@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.vazteixeira.rui.fanatix.R;
+
 /**
  * Created by rmvt on 14/12/14.
  */
@@ -31,6 +33,10 @@ public class FriendsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return null;
+        View view = inflater.inflate(R.layout.fragment_friends, container, false);
+
+        // ...
+
+        return view;
     }
 }
