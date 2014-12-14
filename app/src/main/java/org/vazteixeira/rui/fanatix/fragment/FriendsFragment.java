@@ -9,9 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.vazteixeira.rui.fanatix.R;
+import org.vazteixeira.rui.fanatix.adapter.FriendAdapter;
+import org.vazteixeira.rui.fanatix.model.Friend;
 import org.vazteixeira.rui.fanatix.network.FanatixNetwork;
 import org.vazteixeira.rui.fanatix.network.pojo.ItemFriendsResponsePojo;
 import org.vazteixeira.rui.fanatix.view.LoadingPresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -29,6 +34,7 @@ public class FriendsFragment extends Fragment {
 
     private LoadingPresenter mLoadingPresenter;
 
+    private FriendAdapter mFriendAdapter;
 
     // ***
     //
@@ -144,6 +150,20 @@ public class FriendsFragment extends Fragment {
     //
 
     private void loadData(ItemFriendsResponsePojo responsePojo) {
-        
+
+        // we need to "flatten" the map...
+        List<Friend> team;
+        List<Friend> friends = new ArrayList<>();
+        for (String key : responsePojo.teams.keySet()) {
+
+            team = responsePojo.teams.get(key);
+            for (Friend friend : team) {
+
+                friend.setTeam(key);
+                friends.add(friend);
+            }
+        }
+
+        mFriendAdapter = new FriendAdapter(friends, getActivity());
     }
 }
