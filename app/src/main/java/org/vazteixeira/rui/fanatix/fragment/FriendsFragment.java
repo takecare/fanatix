@@ -18,8 +18,11 @@ import org.vazteixeira.rui.fanatix.view.LoadingPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by rmvt on 14/12/14.
@@ -35,6 +38,8 @@ public class FriendsFragment extends Fragment {
     private LoadingPresenter mLoadingPresenter;
 
     private FriendAdapter mFriendAdapter;
+    @InjectView(R.id.list_fragment_friends_ListView)    StickyListHeadersListView mListView;
+
 
     // ***
     //
@@ -94,44 +99,6 @@ public class FriendsFragment extends Fragment {
 
             mFanatixNetwork = new FanatixNetwork(); // FIXME consider singleton
             mFanatixNetwork.init();
-
-            mFanatixNetwork.listFriendsInterestedInItemFormEncoded(
-                    "cos-iphone", // FIXME hardcoded values!
-                    "1.2.3AT",
-                    "ios",
-                    true,
-                    mItemId,
-                    "50f82e1d4a8b519d6d000069",
-                    "5fd203caf74e219f585067338b5afae3",
-                    new Callback<ItemFriendsResponsePojo>() {
-                        @Override
-                        public void success(ItemFriendsResponsePojo responsePojo, retrofit.client.Response response) {
-
-                            Log.d(TAG, "SUCCESS!");
-                            mLoadingPresenter.hideLoading();
-
-                            if (responsePojo.isResponseOk()) {
-
-                                loadData(responsePojo);
-                            }
-                            else {
-
-                                // TODO error!
-                            }
-
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                            Log.d(TAG, "FAILURE: " + error.getMessage());
-                            mLoadingPresenter.hideLoading();
-
-                            // TODO error!
-                        }
-                    }
-            );
-
         }
     }
 
@@ -140,7 +107,12 @@ public class FriendsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
-        // ...
+        ButterKnife.inject(this, view);
+
+        if (mItemId != null && mItemId.length() > 0) { // double check
+
+            requestData();
+        }
 
         return view;
     }
@@ -148,6 +120,46 @@ public class FriendsFragment extends Fragment {
 
     // ***
     //
+
+    private void requestData() {
+
+        mFanatixNetwork.listFriendsInterestedInItemFormEncoded(
+                "cos-iphone", // FIXME hardcoded values!
+                "1.2.3AT",
+                "ios",
+                true,
+                mItemId,
+                "50f82e1d4a8b519d6d000069",
+                "5fd203caf74e219f585067338b5afae3",
+                new Callback<ItemFriendsResponsePojo>() {
+                    @Override
+                    public void success(ItemFriendsResponsePojo responsePojo, retrofit.client.Response response) {
+
+                        Log.d(TAG, "SUCCESS!");
+                        mLoadingPresenter.hideLoading();
+
+                        if (responsePojo.isResponseOk()) {
+
+                            loadData(responsePojo);
+                        }
+                        else {
+
+                            // TODO error!
+                        }
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                        Log.d(TAG, "FAILURE: " + error.getMessage());
+                        mLoadingPresenter.hideLoading();
+
+                        // TODO error!
+                    }
+                }
+        );
+    }
 
     private void loadData(ItemFriendsResponsePojo responsePojo) {
 
@@ -165,5 +177,6 @@ public class FriendsFragment extends Fragment {
         }
 
         mFriendAdapter = new FriendAdapter(friends, getActivity());
+        mListView.setAdapter(mFriendAdapter);
     }
 }
