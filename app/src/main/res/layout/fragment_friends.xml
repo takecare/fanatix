@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/defaultMargin"
+        android:layout_gravity="center_horizontal"
         android:textSize="@dimen/editTextDefaultTextSize"
         android:text="@string/fragment_friends_create_Button"
         android:enabled="false" />
