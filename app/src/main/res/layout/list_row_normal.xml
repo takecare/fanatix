@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical">
-
-    <FrameLayout
-        android:id="@+id/list_row_chat_FrameLayout"
-        android:layout_width="15dp"
-        android:layout_height="15dp" /> <!-- TODO dimensions.xml -->
-
-    <ImageView
-        android:id="@+id/list_row_avatar_ImageView"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_popup_sync" />
+    android:gravity="center_vertical" >
 
     <ToggleButton
         android:id="@+id/list_row_selected_ToggleButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"  />
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/defaultMargin"/>
+
+    <ImageView
+        android:id="@+id/list_row_avatar_ImageView"
+        android:layout_width="@dimen/avatarSize"
+        android:layout_height="@dimen/avatarSize"
+        android:layout_margin="@dimen/defaultMargin"
+        android:layout_toRightOf="@+id/list_row_selected_ToggleButton"
+        android:src="@android:drawable/ic_popup_sync" />
 
     <TextView
         android:id="@+id/list_row_title_TextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/list_row_avatar_ImageView"
+        android:layout_toLeftOf="@+id/list_row_chat_FrameLayout"
+        android:layout_margin="@dimen/defaultMargin"
+        android:textSize="@dimen/defaultTextSize"
+        android:singleLine="true" />
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/list_row_chat_FrameLayout"
+        android:layout_width="@dimen/lightSize"
+        android:layout_height="@dimen/lightSize"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/defaultMargin"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>

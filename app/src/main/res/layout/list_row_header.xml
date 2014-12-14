@@ -9,6 +9,8 @@
     <TextView
         android:id="@+id/header_view_title_TextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/defaultMargin"
+        android:textSize="@dimen/headerTextSize"/>
 
 </LinearLayout>
