@@ -15,6 +15,8 @@ import org.vazteixeira.rui.fanatix.view.FriendsPresenter;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class MainFragment extends BaseFragment {
 
@@ -64,7 +66,7 @@ public class MainFragment extends BaseFragment {
             public void run() {
                 finalItemIdEditText.setText(itemId);
             }
-        },500);
+        },500); // FIXME hardcoded value
 
         return view;
     }
@@ -86,7 +88,7 @@ public class MainFragment extends BaseFragment {
 
         if (itemId == null || itemId.length() == 0) {
 
-            // TODO error!
+            Crouton.makeText(getActivity(), R.string.error_no_item_id, Style.ALERT).show();
         }
         else {
 

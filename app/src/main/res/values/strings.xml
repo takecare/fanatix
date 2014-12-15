@@ -15,5 +15,10 @@
     <string name="header_view_title_other">OTHER</string>
     <string name="header_view_title_all">ALL</string>
 
+    <!-- errors -->
+    <string name="error_no_item_id">No Item ID was specified!</string>
+    <string name="error_connectivity">Bad request!</string>
+    <string name="error_bad_response">Bad response from server!</string>
+
     <string name="rmvt">rui@vazteixeira.org</string>
 </resources>

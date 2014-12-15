@@ -23,6 +23,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -94,7 +96,7 @@ public class FriendsFragment extends BaseFragment implements FriendSelectedListe
 
         if (mItemId == null || mItemId.length() == 0) {
 
-            // TODO error!
+            Crouton.makeText(getActivity(), R.string.error_no_item_id, Style.ALERT).show();
             Log.e(TAG, "No item id was supplied...");
         }
         else {
@@ -155,16 +157,14 @@ public class FriendsFragment extends BaseFragment implements FriendSelectedListe
                     @Override
                     public void success(ItemFriendsResponsePojo responsePojo, retrofit.client.Response response) {
 
-                        Log.d(TAG, "SUCCESS!");
                         mLoadingPresenter.hideLoading();
-
                         if (responsePojo.isResponseOk()) {
 
                             loadData(responsePojo);
                         }
                         else {
 
-                            // TODO error!
+                            Crouton.makeText(getActivity(), R.string.error_bad_response, Style.ALERT).show();
                         }
 
                     }
@@ -175,7 +175,8 @@ public class FriendsFragment extends BaseFragment implements FriendSelectedListe
                         Log.d(TAG, "FAILURE: " + error.getMessage());
                         mLoadingPresenter.hideLoading();
 
-                        // TODO error!
+                        Crouton.makeText(getActivity(), R.string.error_connectivity, Style.ALERT).show();
+
                     }
                 }
         );

@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 
 public class MainActivity extends ActionBarActivity implements FriendsPresenter, LoadingPresenter, ResultsPresenter,
@@ -67,6 +68,13 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
                         R.id.main_activity_container_FrameLayout,
                         mCurrentFragment)
                 .commit();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Crouton.cancelAllCroutons();
     }
 
     @Override
