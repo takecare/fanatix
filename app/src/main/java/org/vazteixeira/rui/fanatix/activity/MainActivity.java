@@ -1,6 +1,7 @@
 package org.vazteixeira.rui.fanatix.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import org.vazteixeira.rui.fanatix.fragment.FriendsFragment;
 import org.vazteixeira.rui.fanatix.fragment.MainFragment;
 import org.vazteixeira.rui.fanatix.fragment.ResultFragment;
 import org.vazteixeira.rui.fanatix.model.Friend;
+import org.vazteixeira.rui.fanatix.view.FragmentChangedListener;
 import org.vazteixeira.rui.fanatix.view.FriendsPresenter;
 import org.vazteixeira.rui.fanatix.view.LoadingPresenter;
 import org.vazteixeira.rui.fanatix.view.ResultsPresenter;
@@ -29,13 +31,16 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class MainActivity extends ActionBarActivity implements FriendsPresenter, LoadingPresenter, ResultsPresenter {
+public class MainActivity extends ActionBarActivity implements FriendsPresenter, LoadingPresenter, ResultsPresenter,
+        FragmentChangedListener {
 
     public static final String TAG = "MainActivity";
     private static final String LAYOUT_ID_TAG = "loadingRelativeLayout";
 
     @InjectView(R.id.main_activity_loading_RelativeLayout)  RelativeLayout loadingRelativeLayout;
     @InjectView(R.id.main_activity_loading_ProgressBar)     ProgressBar loadingProgressBar;
+
+    private Fragment mCurrentFragment;
 
     // ********
     // LIFECYLE
@@ -44,29 +49,31 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) {
+
+            mCurrentFragment = getSupportFragmentManager().getFragment(savedInstanceState, TAG);
+        }
+        else {
+
+            mCurrentFragment = MainFragment.newInstance();
+        }
+
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(
+                .replace(
                         R.id.main_activity_container_FrameLayout,
-                        MainFragment.newInstance(),
-                        MainFragment.class.getSimpleName())
+                        mCurrentFragment)
                 .commit();
     }
 
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-        outState.putInt(LAYOUT_ID_TAG, loadingRelativeLayout.getId());
-    }
-
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(LAYOUT_ID_TAG)) {
-
-            loadingRelativeLayout = (RelativeLayout) findViewById(savedInstanceState.getInt(LAYOUT_ID_TAG));
-        }
+        getSupportFragmentManager().putFragment(outState, TAG, mCurrentFragment);
     }
 
     // ****
@@ -94,33 +101,34 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
         return super.onOptionsItemSelected(item);
     }
 
+    // *******
+    // HELPERS
+
+    private void showFragment(Fragment fragment) {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(fragment.getClass().getSimpleName())
+                .replace(
+                        R.id.main_activity_container_FrameLayout,
+                        fragment,
+                        fragment.getClass().getSimpleName())
+                .commit();
+    }
+
     // ****************
     // FriendsPresenter
 
     @Override
     public void showFriends(String itemId) {
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack(FriendsFragment.class.getSimpleName())
-                .replace(
-                        R.id.main_activity_container_FrameLayout,
-                        FriendsFragment.newInstance(itemId),
-                        FriendsFragment.class.getSimpleName())
-                .commit();
+        showFragment(FriendsFragment.newInstance(itemId));
     }
 
     @Override
     public void hideFriends() {
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack(MainFragment.class.getSimpleName())
-                .replace(
-                        R.id.main_activity_container_FrameLayout,
-                        MainFragment.newInstance(),
-                        MainFragment.class.getSimpleName())
-                .commit();
+        showFragment(MainFragment.newInstance());
     }
 
     // ****************
@@ -164,26 +172,23 @@ public class MainActivity extends ActionBarActivity implements FriendsPresenter,
     @Override
     public void showResults(List<Friend> selectedFriendsList) {
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack(FriendsFragment.class.getSimpleName())
-                .replace(
-                        R.id.main_activity_container_FrameLayout,
-                        ResultFragment.newInstance((ArrayList<Friend>) selectedFriendsList),
-                        ResultFragment.class.getSimpleName())
-                .commit();
+        showFragment(ResultFragment.newInstance((ArrayList<Friend>) selectedFriendsList));
     }
 
     @Override
     public void hideResults() {
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack(MainFragment.class.getSimpleName())
-                .replace(
-                        R.id.main_activity_container_FrameLayout,
-                        MainFragment.newInstance(),
-                        MainFragment.class.getSimpleName())
-                .commit();
+        showFragment(MainFragment.newInstance());
     }
+
+
+    // ***********************
+    // FragmentChangedListener
+
+    @Override
+    public void fragmentChanged(Fragment fragment) {
+
+        mCurrentFragment = fragment;
+    }
+
 }

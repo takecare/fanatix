@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by rmvt on 14/12/14.
  */
-public interface ResultsPresenter {
+public interface ResultsPresenter extends FragmentChangedListener {
 
     public void showResults(List<Friend> selectedFriendsList);
     public void hideResults();

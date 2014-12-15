@@ -1,7 +1,6 @@
 package org.vazteixeira.rui.fanatix.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * Created by rmvt on 14/12/14.
  */
-public class ResultFragment extends Fragment {
+public class ResultFragment extends BaseFragment {
 
     public static final String TAG = "ResultFragment";
     public static final String FRIENDS_LIST_ARGUMENT = "friends";

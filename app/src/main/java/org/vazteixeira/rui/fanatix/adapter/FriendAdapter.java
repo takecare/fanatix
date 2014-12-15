@@ -34,7 +34,6 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
     private List<Friend> mSelectedFriends;
 
     private FriendSelectedListener mFriendSelectedListener;
-    private int selectedFriendsCount;
 
     public static enum FRIEND_TYPE {
         TEAM, OTHER, ALL
@@ -46,7 +45,6 @@ public class FriendAdapter  extends BaseAdapter implements StickyListHeadersAdap
         mFriendSelectedListener = friendSelectedListener;
         mSelectedFriends = new ArrayList<>();
         mResources = context.getResources();
-        selectedFriendsCount = 0;
         mContext = context;
         mFriends = friends;
     }

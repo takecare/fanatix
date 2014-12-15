@@ -3,7 +3,6 @@ package org.vazteixeira.rui.fanatix.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends BaseFragment {
 
     public static final String TAG = "MainFragment";
 
@@ -47,12 +46,6 @@ public class MainFragment extends Fragment {
             throw new ClassCastException(activity.toString() + " must implement "
                     + FriendsPresenter.class.getSimpleName());
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override

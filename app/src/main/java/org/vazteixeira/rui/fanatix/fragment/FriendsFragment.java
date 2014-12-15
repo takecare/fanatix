@@ -2,7 +2,6 @@ package org.vazteixeira.rui.fanatix.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-public class FriendsFragment extends Fragment implements FriendSelectedListener {
+public class FriendsFragment extends BaseFragment implements FriendSelectedListener {
 
     public static final String TAG = "FriendsFragment";
     public static final String ITEM_ID_ARGUMENT = "itemid";
@@ -100,8 +99,6 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
         }
         else {
 
-            mLoadingPresenter.showLoading();
-
             mFanatixNetwork = new FanatixNetwork(); // FIXME consider singleton
             mFanatixNetwork.init();
         }
@@ -145,6 +142,7 @@ public class FriendsFragment extends Fragment implements FriendSelectedListener 
 
     private void requestData() {
 
+        mLoadingPresenter.showLoading();
         mFanatixNetwork.listFriendsInterestedInItemFormEncoded(
                 "cos-iphone", // FIXME hardcoded values!
                 "1.2.3AT",
